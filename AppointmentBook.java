@@ -1,10 +1,17 @@
 public class AppointmentBook {
-    /**
+    /** 
+     * Stores the values of the available minutes in each period in one day.
+    */
+    private static boolean[][] minutes = new boolean[8][60]; // remember that index starts at 0 and ends in (8 - 1)
+    
+    /**git
         * Returns true if minute in period is available for an appointment and returns
         * false otherwise
         * Preconditions: 1 <= period <= 8; 0 <= minute <= 59
     */
-    //private boolean isMinuteFree(int period, int minute) {}
+    private boolean isMinuteFree(int period, int minute) {
+        return minutes[period-1][minute];
+    }
 
     /**
         * Marks the block of minutes that starts at startMinute in period and
@@ -12,7 +19,11 @@ public class AppointmentBook {
         * Preconditions: 1 <= period <= 8; 0 <= startMinute <= 59;
         * 1 <= duration <= 60
     */
-    //private void reserveBlock(int period, int startMinute, int duration) {}
+    private void reserveBlock(int period, int startMinute, int duration) {
+        for (int m = startMinute; m <= startMinute + duration; m ++) {
+            minutes[period-1][m] = true;
+        }
+    }
  
     /**
         * Searches for the first block of duration free minutes during period, as described in
@@ -20,7 +31,20 @@ public class AppointmentBook {
         * such block is found.
         * Preconditions: 1 <= period <= 8; 1 <= duration <= 60
     */
-    //public int findFreeBlock(int period, int duration) {}
+    public int findFreeBlock(int period, int duration) {
+        int hold;
+        for (int m = 0; m <= 59; m++) {
+            if (isMinuteFree(period-1, m)) {
+                hold = m;
+                boolean Truth = true;
+                for (int n = m; n <= m + duration; n++) {
+                    if (isMinuteFree(period-1, n)) {Truth = false;}
+                }
+                if (Truth) {return hold;}
+            }
+        }
+        return -1;
+    }
 
     /**
         * Searches periods from startPeriod to endPeriod, inclusive, for a block
@@ -29,7 +53,16 @@ public class AppointmentBook {
         * returns false.
         * Preconditions: 1 <= startPeriod <= endPeriod <= 8; 1 <= duration <= 60
     */
-    //public boolean makeAppointment(int startPeriod, int endPeriod, int duration) {}
+    public boolean makeAppointment(int startPeriod, int endPeriod, int duration) {
+        for (int P = startPeriod-1; P <= endPeriod-1; P++) {
+            int op = findFreeBlock(P, duration);
+            if (op != 1) {
+                reserveBlock(P+1, op, duration);
+                return true;
+            }
+        }
+        return false;
+    }
 
         // There may be instance variables, constructors, and methods that are not shown.
 }
