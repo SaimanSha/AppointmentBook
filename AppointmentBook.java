@@ -2,7 +2,7 @@ public class AppointmentBook {
     /** 
      * Stores the values of the available minutes in each period in one day.
     */
-    private static boolean[][] minutes = new boolean[8][60];
+    private boolean[][] minutes = new boolean[8][100]; // temp fix
     
     /**git
         * Returns true if minute in period is available for an appointment and returns
@@ -33,14 +33,15 @@ public class AppointmentBook {
     */
     public int findFreeBlock(int period, int duration) {
         int hold;
-        for (int m = 0; m <= 59; m++) {
-            if (isMinuteFree(period-1, m)) {
+        for (int m = 0; m < 59; m++) {
+            if (isMinuteFree(period, m)) {
                 hold = m;
                 boolean Truth = true;
-                for (int n = m; n <= m + duration; n++) {
-                    if (isMinuteFree(period-1, n)) {Truth = false;}
+                for (int n = m; n < m + duration; n++) {
+                    if (isMinuteFree(period, n) != true) {Truth = false;}
                 }
                 if (Truth) {return hold;}
+                m += duration;
             }
         }
         return -1;
@@ -56,7 +57,7 @@ public class AppointmentBook {
     public boolean makeAppointment(int startPeriod, int endPeriod, int duration) {
         for (int P = startPeriod-1; P <= endPeriod-1; P++) {
             int op = findFreeBlock(P, duration);
-            if (op != 1) {
+            if (op != -1) {
                 reserveBlock(P+1, op, duration);
                 return true;
             }
@@ -64,22 +65,39 @@ public class AppointmentBook {
         return false;
     }
 
+
+
+    
         // The functions below are used for testing purposes.
     
-    public static void Schedule(int[][] schedule, int pd) {
+    public void Schedule(int[][] schedule, int pd) {
         for (int i = 0; i < schedule.length; i++) {
             if (schedule[i][2] == 1) {
-                for (int j = schedule[i][0]; j < schedule[i][1]; j++) {
-                    minutes[pd][j] = true;
+                for (int j = schedule[i][0]; j <= schedule[i][1]; j++) {
+                    minutes[pd-1][j] = true;
                 }
             }
         }
     }
 
-    public static void printSchedule(int pd) {
-        for (int i = 0; i < 60; i++) {
-            System.out.print(minutes[pd][i] + ", ");
+    public void printSchedule(int pd) {
+        for (int i = 0; i < 4; i++) {
+            if (i == 0) System.out.print("Minutes 00-14: ");
+            else System.out.print("Minutes " + (i*15) + "-" + (i*15+14) + ": ");
+            for (int j = 0; j < 15; j++) {
+                String s = "O";
+                if (this.isMinuteFree(pd, i*15+j)) s = "*";
+                System.out.print(" | " + s);
+            }
+            System.out.println(" | ");
         }
-        System.out.println();
+    }
+
+    public void printEntireDay() {
+        for (int i = 0; i < 8; i++) {
+            System.out.println("Period " + (i+1) + ": ");
+            printSchedule(i+1);
+            System.out.println();
+        }
     }
 }
