@@ -2,7 +2,7 @@ public class AppointmentBook {
     /** 
      * Stores the values of the available minutes in each period in one day.
     */
-    private static boolean[][] minutes = new boolean[8][60]; // remember that index starts at 0 and ends in (8 - 1)
+    private static boolean[][] minutes = new boolean[8][60];
     
     /**git
         * Returns true if minute in period is available for an appointment and returns
@@ -64,5 +64,22 @@ public class AppointmentBook {
         return false;
     }
 
-        // There may be instance variables, constructors, and methods that are not shown.
+        // The functions below are used for testing purposes.
+    
+    public static void Schedule(int[][] schedule, int pd) {
+        for (int i = 0; i < schedule.length; i++) {
+            if (schedule[i][2] == 1) {
+                for (int j = schedule[i][0]; j < schedule[i][1]; j++) {
+                    minutes[pd][j] = true;
+                }
+            }
+        }
+    }
+
+    public static void printSchedule(int pd) {
+        for (int i = 0; i < 60; i++) {
+            System.out.print(minutes[pd][i] + ", ");
+        }
+        System.out.println();
+    }
 }
