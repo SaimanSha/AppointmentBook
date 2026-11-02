@@ -16,7 +16,7 @@ public class Main {
         System.out.println(Book1.findFreeBlock(2, 9));
         System.out.println(Book1.findFreeBlock(2, 20));
         System.out.println();
-
+        System.out.println("---------------------------------------------------------------------------------------------"); // for readability
 
         int [][] sample2 = { {0, 24, 0}, {25, 29, 1}, {30, 59, 0} };
         int [][] sample3 = { {0, 14, 1}, {15, 40, 0}, {41, 59, 1} };
@@ -26,10 +26,12 @@ public class Main {
         Book2.Schedule(sample3, 3);
         Book2.Schedule(sample4, 4);
         Book2.printEntireDay();
-
+        System.out.println("---------------------------------------------------------------------------------------------");
         System.out.println(Book2.makeAppointment(2, 4, 22));
         System.out.println(Book2.makeAppointment(3, 4, 3));
         System.out.println(Book2.makeAppointment(2, 4, 30));
+        //System.out.println(Book2.makeAppointment(2, 4, 15));
+        //System.out.println(Book2.makeAppointment(2, 4, 15));
         System.out.println();
         Book2.printEntireDay();
     }

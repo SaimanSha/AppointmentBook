@@ -2,7 +2,7 @@ public class AppointmentBook {
     /** 
      * Stores the values of the available minutes in each period in one day.
     */
-    private boolean[][] minutes = new boolean[8][100]; // temp fix
+    private boolean[][] minutes = new boolean[8][60]; // temp fix
     
     /**git
         * Returns true if minute in period is available for an appointment and returns
@@ -10,7 +10,7 @@ public class AppointmentBook {
         * Preconditions: 1 <= period <= 8; 0 <= minute <= 59
     */
     private boolean isMinuteFree(int period, int minute) {
-        return minutes[period-1][minute];
+        return minutes[period-1][minute] == true;
     }
 
     /**
@@ -20,8 +20,8 @@ public class AppointmentBook {
         * 1 <= duration <= 60
     */
     private void reserveBlock(int period, int startMinute, int duration) {
-        for (int m = startMinute; m <= startMinute + duration; m ++) {
-            minutes[period-1][m] = true;
+        for (int m = startMinute; m < startMinute + duration; m ++) {
+            minutes[period-1][m] = false;
         }
     }
  
@@ -33,7 +33,7 @@ public class AppointmentBook {
     */
     public int findFreeBlock(int period, int duration) {
         int hold;
-        for (int m = 0; m < 59; m++) {
+        for (int m = 0; m < 60-duration; m++) {
             if (isMinuteFree(period, m)) {
                 hold = m;
                 boolean Truth = true;
@@ -41,7 +41,6 @@ public class AppointmentBook {
                     if (isMinuteFree(period, n) != true) {Truth = false;}
                 }
                 if (Truth) {return hold;}
-                m += duration;
             }
         }
         return -1;
@@ -55,10 +54,10 @@ public class AppointmentBook {
         * Preconditions: 1 <= startPeriod <= endPeriod <= 8; 1 <= duration <= 60
     */
     public boolean makeAppointment(int startPeriod, int endPeriod, int duration) {
-        for (int P = startPeriod-1; P <= endPeriod-1; P++) {
+        for (int P = startPeriod; P <= endPeriod; P++) {
             int op = findFreeBlock(P, duration);
             if (op != -1) {
-                reserveBlock(P+1, op, duration);
+                reserveBlock(P, op, duration);
                 return true;
             }
         }
