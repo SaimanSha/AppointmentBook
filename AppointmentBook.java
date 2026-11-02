@@ -67,7 +67,7 @@ public class AppointmentBook {
 
 
     
-        // The functions below are used for testing purposes.
+        // The functions below are used for ADDITIONAL THINGS OTHER THAN testing purposes.
     
     public void Schedule(int[][] schedule, int pd) {
         for (int i = 0; i < schedule.length; i++) {
@@ -78,6 +78,20 @@ public class AppointmentBook {
             }
         }
     }
+
+    public void Schedule(String booleans, int pd) {
+        int pos = booleans.indexOf(" ");
+        int min = 0;
+        while (pos != -1) {
+            String truth = booleans.substring(0, pos);
+            booleans = booleans.substring(pos + 1);
+                if (truth.equals("true")) this.minutes[pd-1][min] = true;
+                else this.minutes[pd-1][min] = false;
+            pos = booleans.indexOf(" ");
+        }
+    }
+
+    public void singularMinute(boolean ok, int min, int pd) { this.minutes[pd-1][min] = ok; }
 
     public void printSchedule(int pd) {
         for (int i = 0; i < 4; i++) {
