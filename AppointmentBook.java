@@ -63,12 +63,7 @@ public class AppointmentBook {
         }
         return false;
     }
-
-
-
-    
-        // The functions below are used for ADDITIONAL THINGS OTHER THAN testing purposes.
-    
+      
     public void Schedule(int[][] schedule, int pd) {
         for (int i = 0; i < schedule.length; i++) {
             if (schedule[i][2] == 1) {
@@ -88,8 +83,13 @@ public class AppointmentBook {
                 if (truth.equals("true")) this.minutes[pd-1][min] = true;
                 else this.minutes[pd-1][min] = false;
             pos = booleans.indexOf(" ");
-        }
+        } 
     }
+
+
+
+
+    //* The functions below are used for testing purposes.*/
 
     public void singularMinute(boolean ok, int min, int pd) { this.minutes[pd-1][min] = ok; }
 
