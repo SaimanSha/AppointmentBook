@@ -80,9 +80,10 @@ public class AppointmentBook {
         while (pos != -1) {
             String truth = booleans.substring(0, pos);
             booleans = booleans.substring(pos + 1);
-                if (truth.equals("true")) this.minutes[pd-1][min] = true;
+                if (Boolean.parseBoolean(truth)) this.minutes[pd-1][min] = true;
                 else this.minutes[pd-1][min] = false;
             pos = booleans.indexOf(" ");
+            min++;
         } 
     }
 

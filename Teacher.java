@@ -24,6 +24,7 @@ public class Teacher {
                                                                     System.out.println("Line: " + n7);
         for (int p = 1; p <= 8; p++) {
             String line = scanner.nextLine();
+                                                                    System.out.println(line);
             this.scheduler.Schedule(line, p);
         }
         Teacher.staffList[ID] = this;
